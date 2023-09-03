@@ -60,6 +60,30 @@
       display: flex;
       flex-direction: column;
     }
+
+    .card-header{
+      display:flex;
+      align-items: center;
+      justify-content: space-between;
+      
+     
+    }
+
+    .list-container{
+      display: flex;
+      align-items: center;
+      justify-content: space-around;
+      
+    }
+
+    .list-container > a {
+      padding: 0px 6px;
+      color: #FFF;
+    }
+    
+
+
+
   </style>
 {% endblock %}
 
@@ -68,7 +92,25 @@
 <div class="chat-container">
   <div class="card flex-grow-1">
     <!-- header -->
-    <div class="card-header bg-primary text-white">Chat</div> 
+
+
+
+
+    <div class="card-header bg-primary text-white">
+      <div class='header-title'> Chat </div>
+      <div class='list-container'>
+        {%if user.is_authenticated%}
+          <a href='logout'> Logout </a>
+        {% else %}
+        
+        
+          <a href='login'>Login</a>
+          <a href='register'> Register</a>
+      
+        {%endif%}
+      </div>
+    </div>
+
     <!-- chat -->
     <div class="card-body messages-box">
       
@@ -80,7 +122,7 @@
               <b>AI Chatbot</b>
             </div>
             <div class="message-content">
-              Hi, I am your AI Chatbot, you can ask me anything.
+              Hi {{user.username}}, I am your AI Chatbot, you can ask me anything.
             </div>
           </div>
         </li>

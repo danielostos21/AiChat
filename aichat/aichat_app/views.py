@@ -1,11 +1,12 @@
 from django.shortcuts import render, redirect
 from django.http import JsonResponse
 from django.contrib import auth
+from django.contrib.auth.models import User
 import openai
 
 
 
-openai_api_key = "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"
+openai_api_key = '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'
 openai.api_key = openai_api_key
 
 def ask_openai(message):
@@ -34,6 +35,19 @@ def aichat(request):
 
 
 def login(request):
+    if request.method == 'POST':
+        username = request.POST ['username']
+        password = request.POST ['password']
+
+        user = auth.authenticate(request, username=username, password=password)
+
+        if user is not None:
+            auth.login(request, user)
+            return redirect('aichat')
+        else:
+            error_message = 'User or password incorrect'
+            return render(request, 'login.html', {'error_message': error_message})
+  
     return render(request, 'login.html')
 
 def register(request):
@@ -47,7 +61,7 @@ def register(request):
                 user = auth.models.User.objects.create_user(username, email, password1)
                 user.save()
                 auth.login(request, user)
-                return (redirect('chatbot'))
+                return (redirect('aichat'))
             except:
                 error_message = 'Error creating account'
                     
@@ -60,3 +74,4 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
+    return redirect('login')
