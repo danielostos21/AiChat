@@ -8,7 +8,7 @@ import openai
 
 
 
-openai_api_key = 'input your'
+openai_api_key = 'input your API key'
 openai.api_key = openai_api_key
 
 def ask_openai(message):
