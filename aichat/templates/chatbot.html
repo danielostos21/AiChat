@@ -4,35 +4,51 @@
 <style>
     body, html {
       height: 100%;
+      
     }
 
     .messages-box {
       flex: 1;
       overflow-y: auto;
+      background-color: #f2f2f2;
     }
 
     .messages-list {
       padding-left: 0;
     }
 
-    .message {
+    .message-container{
+      display: flex;
       margin-bottom: 15px;
       list-style: none;
     }
 
+
+    .align-right{
+      justify-content:right;
+    }
+
+    .message {
+      width:60%;
+      padding: 2px 16px;      
+    }
+
     .message-text {
       padding: 10px;
-      border-radius: 5px;
+      
+
     }
 
     .sent {
-      background-color: #dcf8c6;
-      align-self: flex-end;
+      background-color: #8E94B9; 
+      border-radius: 30px 30px 0 30px  ;
+      
     }
 
     .received {
-      background-color: #f1f0f0;
-      align-self: flex-start;
+      background-color: #E1E3F0;
+      text-align: right;
+      border-radius: 30px 30px 30px 0 ;
     }
 
     .message-form {
@@ -52,7 +68,7 @@
     }
 
     .btn-send {
-      border-radius: 0;
+      border-radius: 0 10px 10px 0;
     }
 
     .chat-container {
@@ -80,8 +96,12 @@
       padding: 0px 6px;
       color: #FFF;
     }
-    
 
+    .form-control{
+      border-radius: 10px 0 0 10px ;
+    }
+    
+    
 
 
   </style>
@@ -96,14 +116,15 @@
 
 
 
-    <div class="card-header bg-primary text-white">
+    <div class="card-header bg-dark text-white">
       <div class='header-title'> Chat </div>
       <div class='list-container'>
+        <a href='{% url 'home' %}'>Home</a>
         {%if user.is_authenticated%}
           <a href='logout'> Logout </a>
         {% else %}
         
-        
+          
           <a href='login'>Login</a>
           <a href='register'> Register</a>
       
@@ -116,7 +137,7 @@
       
       <ul class="list-unstyled messages-list">
         
-        <li class="message received">
+        {% comment %} <li class="message received">
           <div class="message-text">
             <div class="message-sender">
               <b>AI Chatbot</b>
@@ -126,8 +147,44 @@
             </div>
           </div>
         </li>
-      </ul>
+      {% endcomment %}
       
+
+      {%for chat in chats%}
+        {% if chat.user == request.user %}
+        <li class="message-container align-right">
+          <div class='message sent'>
+            <div class="message-text">
+              <div class="message-sender">
+                <b>You</b>
+              </div>
+              <div class="message-content">
+                {{chat.message}}
+              </div>
+            </div>
+          </div>
+        </li>
+
+        <li class="message-container">
+          <div class='message received'>
+            <div class="message-text">
+              <div class="message-sender">
+                <b>AI Chatbot</b>
+              </div>
+              <div class="message-content">
+              {{chat.response}}
+              </div>
+            </div>
+          </div>
+        </li>
+      
+
+
+
+        {% endif %}
+      {% endfor %}
+      </ul>
+
     </div>
     <br><br>
     <br><br>
@@ -138,7 +195,7 @@
     <div class="input-group">
       <input type="text" class="form-control message-input" placeholder="Type your message...">
       <div class="input-group-append">
-        <button type="submit" class="btn btn-primary btn-send">Send</button>
+        <button type="submit" class="btn btn-dark btn-send">Send</button>
       </div>
     </div>
   </form>

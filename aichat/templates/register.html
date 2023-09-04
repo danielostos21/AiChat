@@ -17,7 +17,7 @@
     max-width: 400px;
   }
   .card-header {
-    background-color: #007bff;
+    background-color: #8E94B9;
     color: white;
     font-size: 24px;
     font-weight: bold;
@@ -44,7 +44,7 @@
     margin-bottom: 10px;
   }
   button[type=submit] {
-    background-color: #007bff;
+    background-color: #8E94B9;
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -69,6 +69,13 @@
 {% endblock %}
 
 {% block content %}
+
+<nav class="navbar bg-dark text-white">
+  <div class="container-fluid">
+    <a class="navbar-brand text-white" href="{% url 'home' %}">Home</a>
+  </div>
+</nav>
+
 <div class="register-container">
   <div class="card">
     <div class="card-header">Register</div>
@@ -96,6 +103,8 @@
         </div>
         <button type="submit">Register</button>
       </form>
+
+      
     </div>
   </div>
 </div>
